@@ -174,4 +174,3 @@ def save_chart(fig, filepath):
     plt.close(fig)
 
     return filepath
-
