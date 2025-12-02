@@ -156,7 +156,7 @@ def generate_combined_chart():
     ax2.plot(x_positions, calories, marker="o", color="red")
     ax2.set_ylabel("Calories Eaten")
 
-    fig.suptitle("Volume (Bars) & Calories (Line) Over Time")
+    fig.suptitle("Volume & Calories Over Time")
     fig.tight_layout()
 
     path = "data/charts/combined_chart.png"
