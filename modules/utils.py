@@ -15,7 +15,7 @@ def read_csv(filepath):
     if not os.path.exists(filepath):
         return []
 
-    with open(filepath, mode="r", newline="", encoding="utf-8") as f:
+    with open(filepath, mode="r", newline="", encoding="utf-8") as file:
         reader = csv.DictReader(f)
         return list(reader)
 
@@ -27,20 +27,20 @@ def get_mdy(date_string):
 
 def file_validate(filepath, header_list):
     if not os.path.exists(filepath):
-        with open(filepath, mode="w", newline="", encoding="utf-8") as f:
-            writer = csv.writer(f)
+        with open(filepath, mode="w", newline="", encoding="utf-8") as file:
+            writer = csv.writer(file)
             writer.writerow(header_list)
         return
 
-    with open(filepath, mode="r", newline="", encoding="utf-8") as f:
-        reader = csv.reader(f)
+    with open(filepath, mode="r", newline="", encoding="utf-8") as file:
+        reader = csv.reader(file)
         try:
             existing_headers = next(reader)
         except Exception:
             existing_headers = []
 
     if existing_headers != header_list:
-        with open(filepath, mode="w", newline="", encoding="utf-8") as f:
+        with open(filepath, mode="w", newline="", encoding="utf-8") as file:
             writer = csv.writer(f)
             writer.writerow(header_list)
 
@@ -53,6 +53,6 @@ def write_csv_row(filepath, row):
 
     file_validate(filepath, header_list)
 
-    with open(filepath, mode="a", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=header_list)
+    with open(filepath, mode="a", newline="", encoding="utf-8") as file:
+        writer = csv.DictWriter(file, fieldnames=header_list)
         writer.writerow(row)
