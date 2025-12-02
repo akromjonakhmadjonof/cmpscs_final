@@ -1,23 +1,58 @@
-# Validate the date mm-dd-yyyy in this format
+from datetime import datetime
+import csv
+import os
+
+
 def validate_date(date_string):
-    pass
+    try:
+        datetime.strptime(date_string, "%m-%d-%Y")
+        return True
+    except ValueError:
+        return False
 
 
-# Read the csv file from filepath
 def read_csv(filepath):
-    pass
+    if not os.path.exists(filepath):
+        return []
+
+    with open(filepath, mode="r", newline="", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        return list(reader)
 
 
-# Insert the row to csv file in filepath
-def write_csv_row(filepath, row):
-    pass
-
-
-# Separate month, date, year
 def get_mdy(date_string):
-    pass
+    dt = datetime.strptime(date_string, "%m-%d-%Y")
+    return dt.month, dt.day, dt.year
 
 
-# Check if the file exists and headers are correct
 def file_validate(filepath, header_list):
-    pass
+    if not os.path.exists(filepath):
+        with open(filepath, mode="w", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
+            writer.writerow(header_list)
+        return
+
+    with open(filepath, mode="r", newline="", encoding="utf-8") as f:
+        reader = csv.reader(f)
+        try:
+            existing_headers = next(reader)
+        except Exception:
+            existing_headers = []
+
+    if existing_headers != header_list:
+        with open(filepath, mode="w", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
+            writer.writerow(header_list)
+
+
+def write_csv_row(filepath, row):
+    if not isinstance(row, dict):
+        raise Exception("Row has be a dict")
+
+    header_list = list(row.keys())
+
+    file_validate(filepath, header_list)
+
+    with open(filepath, mode="a", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=header_list)
+        writer.writerow(row)
