@@ -54,30 +54,16 @@ def get_max_weight_progress(exercise_name):
     max_date = None
 
     for w in all_workouts:
-        name = w.get("exercise", w.get("exercise_name"))
-        if name != exercise_name:
-            continue
-
-        weight = w.get("weight")
-        date = w.get("date")
-
-        if weight is None or date is None:
-            continue
-
-        try:
-            weight_value = float(weight)
-        except (TypeError, ValueError):
-            continue
-
-        if (max_weight is None) or (weight_value > max_weight):
-            max_weight = weight_value
-            max_date = date
+        if w.get("exercise") == exercise_name:
+            weight = w.get("weight")
+            date = w.get("date")
+            if weight is not None:
+                weight = float(weight)
+                if max_weight is None or weight > max_weight:
+                    max_weight = weight
+                    max_date = date
 
     if max_weight is None:
-        return None
-
-    return {
-        "exercise": exercise_name,
-        "date": max_date,
-        "max_weight": max_weight
-    }
+        print("No records for this exercise.")
+    else:
+        print(f"Max weight for {exercise_name}: {max_weight} on {max_date}")
