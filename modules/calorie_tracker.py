@@ -3,12 +3,10 @@ from utils import *
 
 # Validate the date using utils.validate_date if the date exists overwrite it
 def record_calories(date, calories_eaten, calorie_goal):
-    # Check if date is valid
     if not validate_date(date):
         print("Error: Invalid date. Use YYYY-MM-DD")
         return False
     
-    # Create the row to save
     row = [date, str(calories_eaten), str(calorie_goal)]
     
     save_calorie_row(row)
@@ -37,10 +35,8 @@ def save_calorie_row(row):
 def get_calories_by_date(date):
     records = load_calories()
     
-    # Look for matching date
     for record in records:
         if record[0] == date:
-            # Found it!
             return {
                 'date': record[0],
                 'calories_eaten': record[1],
