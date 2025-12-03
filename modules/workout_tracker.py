@@ -8,7 +8,7 @@ def record_workout(date, exercise_name, weight, reps, sets):
     # Create the workout row
     row = {
         'date': date,
-        'exercise_name': exercise_name,
+        'exercise_name': "".join(exercise_name.split(" ")),
         'weight': str(weight),
         'reps': str(reps),
         'sets': str(sets)
