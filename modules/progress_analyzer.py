@@ -1,5 +1,4 @@
-from utils import *
-from workout_tracker import *
+from modules.workout_tracker import *
 
 
 # Basic math volume = weight * reps * sets.
@@ -41,9 +40,10 @@ def get_volume_over_time():
     result = []
     for d in sorted_dates:
         volume = get_daily_volume(d)
-        result.append({"date": d, "volume": volume})
+        result.append({"date": d, "total_volume": volume})
 
     return result
+
 
 # Load all workout records using workout_tracker.load_workouts
 # Filter by exercise name

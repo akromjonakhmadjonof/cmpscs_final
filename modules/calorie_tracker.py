@@ -1,46 +1,45 @@
-from utils import *
+from modules.constants import CALORIES
+from modules.utils import *
 
 
-# Validate the date using utils.validate_date if the date exists overwrite it
 def record_calories(date, calories_eaten, calorie_goal):
-    if not validate_date(date):
-        print("Error: Invalid date. Use YYYY-MM-DD")
-        return False
-    
-    row = [date, str(calories_eaten), str(calorie_goal)]
-    
-    save_calorie_row(row)
-    return True
-    
-# Load all records from calories.csv
+    row = {
+        "date": date,
+        "calories_eaten": str(calories_eaten),
+        "calorie_goal": str(calorie_goal)
+    }
+
+    if save_calorie_row(row):
+        print("Calorie entry recorded successfully.\n")
+        return True
+    print("Something went wrong in saving calories record.\n")
+
+
 def load_calories():
+    data = read_csv(CALORIES)
     records = []
-    file = None
-    file = open('calories.csv', 'r')
-    if file:
-        lines = file.readllines()
-        file.close()
-        records = [line.strip().split(',') for line in lines if line.strip()]
+    for row in data:
+        if row:
+            workout_dict = {
+                'date': row['date'],
+                'calories_eaten': row['calories_eaten'],
+                'calorie_goal': row['calorie_goal'],
+            }
+            records.append(workout_dict)
     return records
 
 
-# Save the row using utils.write_csv_row
 def save_calorie_row(row):
-    with open('calories.csv', 'a') as file:
-        file.write(','.join(row) + '\n')
+    write_csv_row(CALORIES, row)
     return True
 
 
 # Get calories record to given date
 def get_calories_by_date(date):
     records = load_calories()
-    
+    data = None
     for record in records:
-        if record[0] == date:
-            return {
-                'date': record[0],
-                'calories_eaten': record[1],
-                'calorie_goal': record[2]
-            }
-    
-    return None
+        if record["date"] == date:
+            data = record
+
+    return data

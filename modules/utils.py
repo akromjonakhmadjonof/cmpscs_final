@@ -5,7 +5,7 @@ import os
 
 def validate_date(date_string):
     try:
-        datetime.strptime(date_string, "%m-%d-%Y")
+        datetime.strptime(date_string, "%Y-%m-%d")
         return True
     except ValueError:
         return False
@@ -16,12 +16,12 @@ def read_csv(filepath):
         return []
 
     with open(filepath, mode="r", newline="", encoding="utf-8") as file:
-        reader = csv.DictReader(f)
+        reader = csv.DictReader(file)
         return list(reader)
 
 
 def get_mdy(date_string):
-    dt = datetime.strptime(date_string, "%m-%d-%Y")
+    dt = datetime.strptime(date_string, "%Y-%m-%d")
     return dt.month, dt.day, dt.year
 
 
@@ -41,7 +41,7 @@ def file_validate(filepath, header_list):
 
     if existing_headers != header_list:
         with open(filepath, mode="w", newline="", encoding="utf-8") as file:
-            writer = csv.writer(f)
+            writer = csv.writer(file)
             writer.writerow(header_list)
 
 

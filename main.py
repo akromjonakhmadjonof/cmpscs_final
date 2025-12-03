@@ -1,11 +1,3 @@
-from modules.calorie_tracker import *
-from modules.chart_creator import *
-from modules.summarizer import *
-from modules.progress_analyzer import *
-from modules.workout_tracker import *
-
-# main.py
-
 from modules import workout_tracker
 from modules import calorie_tracker
 from modules import summarizer
@@ -58,14 +50,12 @@ def handle_record_calories():
     calorie_goal = prompt_int("Calorie goal: ")
 
     calorie_tracker.record_calories(date, calories_eaten, calorie_goal)
-    print("Calorie entry recorded successfully.\n")
 
 
 def handle_daily_summary():
     print("\n====== Daily Summary ======")
     date = prompt_date()
-    summary = summarizer.summarize_day(date)
-    print("\n" + summary + "\n")
+    summarizer.summarize_day(date)
 
 
 def handle_weekly_summary():
@@ -75,35 +65,6 @@ def handle_weekly_summary():
     print("\n" + summary + "\n")
 
 
-def handle_specific_date_view():
-    print("\n====== View Data for Specific Date ======")
-    date = prompt_date()
-
-    workouts = workout_tracker.get_workouts_by_date(date)
-    calories = calorie_tracker.get_calories_by_date(date)
-
-    print(f"\nData for {date}:")
-    print("\n-- Workouts --")
-    if not workouts:
-        print("No workouts recorded in that day.")
-    else:
-        for w in workouts:
-            print(f"- {w.get('exercise', 'Unknown')} | "
-                  f"Weight: {w.get('weight', '?')} | "
-                  f"Reps: {w.get('reps', '?')} | "
-                  f"Sets: {w.get('sets', '?')}")
-
-    print("\n-- Calories --")
-    if not calories:
-        print("No calorie entry recorded.")
-    else:
-        for c in calories:
-            print(f"- Calories eaten: {c.get('calories_eaten', '?')} | "
-                  f"Goal: {c.get('calorie_goal', '?')}")
-
-    print()
-
-
 def handle_generate_chart():
     print("\n====== Generate Chart=== ===")
     print("1. Generate workout volume chart")
@@ -111,18 +72,18 @@ def handle_generate_chart():
     print("3. Generate combined chart")
     print("4. Back to main menu")
 
-    choice = input("Choose an option: ").strip()
+    choice = int(input("Choose an option: ").strip())
 
-    if choice == "1":
+    if choice == 1:
         filepath = chart_creator.generate_volume_chart()
         print(f"Volume chart saved at: {filepath}\n")
-    elif choice == "2":
+    elif choice == 2:
         filepath = chart_creator.generate_calorie_chart()
         print(f"Calorie chart saved at: {filepath}\n")
-    elif choice == "3":
+    elif choice == 3:
         filepath = chart_creator.generate_combined_chart()
         print(f"Combined chart saved at: {filepath}\n")
-    elif choice == "4":
+    elif choice == 4:
         print()
         return
     else:
@@ -136,25 +97,22 @@ def main():
         print("2. Record Calories")
         print("3. View Daily Summary")
         print("4. View Weekly Summary")
-        print("5. View Data for Specific Date")
-        print("6. Generate Summary Charts")
-        print("7. Exit")
+        print("5. Generate Summary Charts")
+        print("6. Exit")
 
-        choice = input("Choose an option: ").strip()
+        choice = int(input("Choose an option: ").strip())
 
-        if choice == "1":
+        if choice == 1:
             handle_record_workout()
-        elif choice == "2":
+        elif choice == 2:
             handle_record_calories()
-        elif choice == "3":
+        elif choice == 3:
             handle_daily_summary()
-        elif choice == "4":
+        elif choice == 4:
             handle_weekly_summary()
-        elif choice == "5":
-            handle_specific_date_view()
-        elif choice == "6":
+        elif choice == 5:
             handle_generate_chart()
-        elif choice == "7":
+        elif choice == 6:
             print("Goodbye!")
             break
         else:

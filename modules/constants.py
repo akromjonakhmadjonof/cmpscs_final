@@ -1,0 +1,5 @@
+WORKOUTS = "data/workouts.csv"
+CALORIES = "data/calories.csv"
+COMBINED_CHART = "data/charts/combined_chart.png"
+CALORIES_CHART = "data/charts/calorie_chart.png"
+VOLUME_CHART = "data/charts/volume_chart.png"

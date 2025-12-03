@@ -1,15 +1,10 @@
-from utils import *
-from workout_tracker import *
-from calorie_tracker import *
-from progress_analyzer import *
+from datetime import *
+from modules.calorie_tracker import *
+from modules.progress_analyzer import *
 
 
 # Get relevant data from workout, calorie, progress modules to the given date
 def summarize_day(date):
-    if not validate_date(date):
-        print("Invalid date format.")
-        return
-
     # load workouts of that day
     workouts = get_workouts_by_date(date)
     # calculate daily total volume
@@ -22,7 +17,7 @@ def summarize_day(date):
     if workouts:
         print("Workouts:")
         for w in workouts:
-            print(f"  - {w['exercise']}: {w['weight']} x {w['reps']} x {w['sets']}")
+            print(f"  - {w['exercise_name']}: {w['weight']} x {w['reps']} x {w['sets']}")
     else:
         print("No workout recorded.")
 
@@ -39,16 +34,12 @@ def summarize_day(date):
 #  Get relevant data from workout, calorie, progress modules from given start_date
 # Call summarize_day 7 times to get summary of each day in the week and calculate totals of them
 def summarize_week(start_date):
-    if not validate_date(start_date):
-        print("Invalid date format.")
-        return
-
     m, d, y = get_mdy(start_date)
     start_dt = datetime(y, m, d)
 
     total_volume = 0
     workout_days = 0
-    
+
     print(f"\n=== Weekly Summary starting {start_date} ===")
 
     for i in range(7):

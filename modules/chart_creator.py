@@ -1,11 +1,7 @@
-import os
-from datetime import datetime
-
 import matplotlib.pyplot as plt
 
-from utils import *
-from progress_analyzer import *
-from calorie_tracker import *
+from modules.progress_analyzer import *
+from modules.calorie_tracker import *
 
 
 def parse_date(date):
@@ -27,8 +23,7 @@ def generate_volume_chart():
         ax.text(0.5, 0.5, "No workout data available", ha="center", va="center")
         ax.set_axis_off()
 
-        path = "data/charts/volume_chart.png"
-        return save_chart(fig, path)
+        return save_chart(fig, VOLUME_CHART)
 
     data_sorted = sort_by_date(data)
 
@@ -49,8 +44,7 @@ def generate_volume_chart():
     ax.tick_params(axis="x", rotation=45)
     fig.tight_layout()
 
-    path = "data/charts/volume_chart.png"
-    return save_chart(fig, path)
+    return save_chart(fig, VOLUME_CHART)
 
 
 def generate_calorie_chart():
@@ -61,8 +55,7 @@ def generate_calorie_chart():
         ax.text(0.5, 0.5, "No calorie data available", ha="center", va="center")
         ax.set_axis_off()
 
-        path = "data/charts/calorie_chart.png"
-        return save_chart(fig, path)
+        return save_chart(fig, CALORIES_CHART)
 
     entries_sorted = sort_by_date(entries)
 
@@ -88,8 +81,7 @@ def generate_calorie_chart():
     ax.legend()
     fig.tight_layout()
 
-    path = "data/charts/calorie_chart.png"
-    return save_chart(fig, path)
+    return save_chart(fig, CALORIES_CHART)
 
 
 def generate_combined_chart():
@@ -101,8 +93,7 @@ def generate_combined_chart():
         ax.text(0.5, 0.5, "No data available", ha="center", va="center")
         ax.set_axis_off()
 
-        path = "data/charts/combined_chart.png"
-        return save_chart(fig, path)
+        return save_chart(fig, COMBINED_CHART)
 
     volume_map = {}
     for item in volume_data:
@@ -159,16 +150,16 @@ def generate_combined_chart():
     fig.suptitle("Volume & Calories Over Time")
     fig.tight_layout()
 
-    path = "data/charts/combined_chart.png"
-    return save_chart(fig, path)
+    return save_chart(fig, COMBINED_CHART)
 
 
 def save_chart(fig, filepath):
-    folder = os.path.dirname(filepath)
+    if os.path.exists(filepath):
+        os.remove(filepath)
 
-    if folder != "":
-        if not os.path.exists(folder):
-            os.makedirs(folder)
+    folder = os.path.dirname(filepath)
+    if folder and not os.path.exists(folder):
+        os.makedirs(folder)
 
     fig.savefig(filepath, bbox_inches="tight")
     plt.close(fig)
