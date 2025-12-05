@@ -17,7 +17,8 @@ def summarize_day(date):
     if workouts:
         print("Workouts:")
         for w in workouts:
-            print(f"  - {w['exercise_name']}: {w['weight']} x {w['reps']} x {w['sets']}")
+            print(
+                f"  - {" ".join(w['exercise_name'].split("_")).capitalize()}: {w['weight']} x {w['reps']} x {w['sets']}")
     else:
         print("No workout recorded.")
 
@@ -39,27 +40,33 @@ def summarize_week(start_date):
 
     total_volume = 0
     workout_days = 0
+    calorie_goal = 0
+    calories_eaten = 0
+    cal_diff = calorie_goal - calories_eaten
 
     print(f"\n=== Weekly Summary starting {start_date} ===")
 
     for i in range(7):
         current = start_dt + timedelta(days=i)
-        date_str = current.strftime("%m-%d-%Y")
-
-        print(f"\n--- {date_str} ---")
+        date_str = current.strftime("%Y-%m-%d")
         day_volume = get_daily_volume(date_str)
         workouts = get_workouts_by_date(date_str)
-
+        calories = get_calories_by_date(date_str)
+        total_volume += day_volume
+        calories_eaten += int(calories["calories_eaten"])
+        calorie_goal += int(calories["calorie_goal"])
         if workouts:
             workout_days += 1
-            print("Workouts:", len(workouts))
-        else:
-            print("No workouts.")
 
-        print("Daily volume:", day_volume)
-
-        total_volume += day_volume
-
+        summarize_day(date_str)
+    if cal_diff > 0:
+        msg = f"You are in a deficit of {abs(cal_diff)} kcals"
+    elif cal_diff < 0:
+        msg = f"You are in a surplus of {abs(cal_diff)} kcals"
+    else:
+        msg = "You achieved your target!"
     print("\n=== Weekly Results ===")
+
+    print("Calories Status: " + msg)
     print("Total volume:", total_volume)
     print("Workout days:", workout_days)

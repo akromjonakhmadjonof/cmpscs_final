@@ -62,7 +62,7 @@ def prompt_float(prompt_text):
 def handle_record_workout():
     print("\n====== Record Workout ======")
     date = prompt_date()
-    exercise_name = input("Exercise name: ").strip().lower()
+    exercise_name = "".join(input("Exercise name: ").strip().lower().split(" "))
     weight = prompt_float("Weight used (e.g., 135): ")
     reps = prompt_int("Reps per set: ")
     sets = prompt_int("Number of sets: ")
@@ -110,8 +110,7 @@ def handle_daily_summary():
 def handle_weekly_summary():
     print("\n====== Weekly Summary ======")
     start_date = prompt_date("Enter the start date of the week (YYYY-MM-DD): ")
-    summary = summarizer.summarize_week(start_date)
-    print("\n" + summary + "\n")
+    summarizer.summarize_week(start_date)
 
 
 # ----------------------------------------------------------------------
