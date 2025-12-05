@@ -15,6 +15,7 @@ def calculate_volume(weight, reps, sets):
 def get_daily_volume(date):
     workouts = get_workouts_by_date(date)
     total_volume = 0
+    # Loop through each workout and accumulate its volume
     for w in workouts:
         weight = w.get("weight", 0)
         reps = w.get("reps", 0)
@@ -29,15 +30,15 @@ def get_daily_volume(date):
 # It is for generating charts later
 def get_volume_over_time():
     all_workouts = load_workouts()
-
     unique_dates = set()
+    # Collect each unique date found in the workout records
     for w in all_workouts:
         d = w.get("date")
         if d:
             unique_dates.add(d)
     sorted_dates = sorted(unique_dates)
-
     result = []
+    # Compute volume for each date
     for d in sorted_dates:
         volume = get_daily_volume(d)
         result.append({"date": d, "total_volume": volume})
@@ -52,13 +53,15 @@ def get_max_weight_progress(exercise_name):
     all_workouts = load_workouts()
     max_weight = None
     max_date = None
-
+    # Check every workout
     for w in all_workouts:
         if w.get("exercise") == exercise_name:
             weight = w.get("weight")
             date = w.get("date")
+            # Ensure weight exists
             if weight is not None:
                 weight = float(weight)
+                # Update max if this weight is greater
                 if max_weight is None or weight > max_weight:
                     max_weight = weight
                     max_date = date
