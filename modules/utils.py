@@ -1,3 +1,12 @@
+#   Program Name:   main.py
+#
+#   Author:         Akromjon Akhmadjonov
+#
+#   Copyright:      Penn State University
+#
+#   Date:           5 December, 2025
+#
+#   Description:    This file contains shared functions all over project
 from datetime import datetime
 import csv
 import os

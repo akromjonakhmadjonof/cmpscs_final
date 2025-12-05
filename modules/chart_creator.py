@@ -1,3 +1,12 @@
+#   Program Name:   main.py
+#
+#   Author:         Akromjon Akhmadjonov
+#
+#   Copyright:      Penn State University
+#
+#   Date:           5 December, 2025
+#
+#   Description:    This file contains codes that creates charts of statistics with calories and workouts.
 import matplotlib.pyplot as plt
 
 from modules.progress_analyzer import *

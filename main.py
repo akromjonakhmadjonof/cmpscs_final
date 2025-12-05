@@ -1,3 +1,13 @@
+#   Program Name:   main.py
+#
+#   Author:         Akromjon Akhmadjonov
+#
+#   Copyright:      Penn State University
+#
+#   Date:           5 December, 2025
+#
+#   Description:    This file is starting point of Fitness App
+
 from modules import workout_tracker
 from modules import calorie_tracker
 from modules import summarizer
