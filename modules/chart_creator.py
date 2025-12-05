@@ -4,10 +4,24 @@ from modules.progress_analyzer import *
 from modules.calorie_tracker import *
 
 
+# ----------------------------------------------------------------------
+#   Function Name: parse_date
+#   Parameters:   date: string
+#   Return Value: date: string formatted date
+#   Description:
+#    Formats and Parses the given date
+# ----------------------------------------------------------------------
 def parse_date(date):
     return datetime.strptime(date, "%Y-%m-%d").date()
 
 
+# ----------------------------------------------------------------------
+#   Function Name: sort_by_date
+#   Parameters:   list_of_dicts: [{}]
+#   Return Value:  list_of_dicts: [{}]
+#   Description:
+#    Formats the list of dicts
+# ----------------------------------------------------------------------
 def sort_by_date(list_of_dicts):
     def get_date_value(item):
         return parse_date(item["date"])
@@ -15,6 +29,13 @@ def sort_by_date(list_of_dicts):
     return sorted(list_of_dicts, key=get_date_value)
 
 
+# ----------------------------------------------------------------------
+#   Function Name: generate_volume_chart
+#   Parameters:  None
+#   Return Value:  saved file path
+#   Description:
+#    Generates Volume Chart
+# ----------------------------------------------------------------------
 def generate_volume_chart():
     data = get_volume_over_time()
 
@@ -47,6 +68,13 @@ def generate_volume_chart():
     return save_chart(fig, VOLUME_CHART)
 
 
+# ----------------------------------------------------------------------
+#   Function Name: generate_calorie_chart
+#   Parameters:  None
+#   Return Value:  saved file path
+#   Description:
+#    Generates Calories Chart
+# ----------------------------------------------------------------------
 def generate_calorie_chart():
     entries = load_calories()
 
@@ -84,6 +112,13 @@ def generate_calorie_chart():
     return save_chart(fig, CALORIES_CHART)
 
 
+# ----------------------------------------------------------------------
+#   Function Name: generate_combined_chart
+#   Parameters:  None
+#   Return Value:  saved file path
+#   Description:
+#    Generates Combined Chart
+# ----------------------------------------------------------------------
 def generate_combined_chart():
     volume_data = get_volume_over_time()
     calorie_data = load_calories()
@@ -153,6 +188,7 @@ def generate_combined_chart():
     return save_chart(fig, COMBINED_CHART)
 
 
+# Saves the generated file to given filepath
 def save_chart(fig, filepath):
     if os.path.exists(filepath):
         os.remove(filepath)
