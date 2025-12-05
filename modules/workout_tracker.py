@@ -1,3 +1,12 @@
+#   Program Name:   main.py
+#
+#   Author:         Ye Chen
+#
+#   Copyright:      Penn State University
+#
+#   Date:           5 December, 2025
+#
+#   Description:    This file contains codes that workout tracker
 from modules.constants import *
 from modules.utils import *
 
