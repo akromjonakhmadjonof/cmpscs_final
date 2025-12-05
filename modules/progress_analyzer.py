@@ -1,5 +1,9 @@
-from modules.workout_tracker import *
+#   Program Name: main.py
+#   Author: Zihui Li
+#   Copyright: Penn State University
+#   Date: 5 December, 2025
 
+from modules.workout_tracker import *
 
 # Basic math volume = weight * reps * sets.
 def calculate_volume(weight, reps, sets):
@@ -7,7 +11,6 @@ def calculate_volume(weight, reps, sets):
         return float(weight) * int(reps) * int(sets)
     except (TypeError, ValueError):
         return 0
-
 
 # Get workouts using workout_tracker.get_workouts_by_date
 # For each exercise in the given day calculate volume using calculate_volume
