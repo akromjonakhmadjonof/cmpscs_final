@@ -8,7 +8,7 @@
 #
 #   Description:    This file contains codes that calorie_tracker
 from modules.constants import CALORIES
-from modules.utils import *
+from modules.utils import * 
 
 
 def record_calories(date, calories_eaten, calorie_goal):
